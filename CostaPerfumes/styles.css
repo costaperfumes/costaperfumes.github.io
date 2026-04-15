@@ -126,11 +126,11 @@ body, html {
   border-radius: 50%;
   position: relative;
 
-  background: conic-gradient(
-  #ffffff 0deg 234deg,        /* 65% sigue participando */
-  #93BBE1 234deg 324deg,     /* 25% */
-  #ffffff 324deg 352deg,     /* 8% */
-  #93BBE1 352deg 360deg      /* 2% */
+ background: conic-gradient(
+  #ffffff 0deg 234deg,        /* Sigue participando (65%) */
+  #93BBE1 234deg 324deg,     /* 5% */
+  #ffffff 324deg 352deg,     /* 10% */
+  #93BBE1 352deg 360deg      /* $20.000 */
 );
 
   box-shadow:
@@ -159,11 +159,19 @@ body, html {
   line-height: 1.05;
 }
 
-/* POSICIONES */
-.l1 { transform: rotate(45deg) translateY(-95px); }
-.l2 { transform: rotate(135deg) translateY(-95px); }
-.l3 { transform: rotate(225deg) translateY(-95px); }
-.l4 { transform: rotate(315deg) translateY(-95px); }
+/* CENTROS DE CADA SEGMENTO */
+
+/* Sigue participando (centro aprox 117°) */
+.l4 { transform: rotate(117deg) translateY(-95px); }
+
+/* 5% (centro aprox 279°) */
+.l2 { transform: rotate(279deg) translateY(-95px); }
+
+/* 10% (centro aprox 338°) */
+.l3 { transform: rotate(338deg) translateY(-95px); }
+
+/* $20.000 (centro aprox 356°) */
+.l1 { transform: rotate(356deg) translateY(-95px); }
 
 /* RESULTADO */
 .resultado {
