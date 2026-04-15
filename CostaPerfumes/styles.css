@@ -16,16 +16,23 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: blur(5px) brightness(0.6);
+  filter: blur(6px) brightness(0.5);
   transform: scale(1.1);
+  opacity: 0;
+  transition: opacity 1.5s ease;
   z-index: -2;
 }
 
+.video-bg.visible {
+  opacity: 1;
+}
+
+/* OVERLAY */
 .overlay {
   position: fixed;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.6);
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7));
   z-index: -1;
 }
 
@@ -36,17 +43,36 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
+
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 1.2s ease;
 }
 
-/* BOTONES */
+.contenido.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.titulo {
+  font-size: 2.8rem;
+  letter-spacing: 2px;
+}
+
+/* BOTON */
 .btn {
-  padding: 12px 25px;
+  padding: 12px 28px;
   background: #93BBE1;
   border: none;
   border-radius: 30px;
   font-weight: bold;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
 }
 
 /* RULETA OVERLAY */
@@ -56,7 +82,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.92);
 
   display: flex;
   justify-content: center;
@@ -64,7 +90,7 @@ body {
 
   opacity: 0;
   pointer-events: none;
-  transition: 0.3s;
+  transition: 0.4s;
 }
 
 .ruleta-container.active {
@@ -72,20 +98,20 @@ body {
   pointer-events: all;
 }
 
-/* CAJA RULETA */
+/* CAJA */
 .ruleta-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 /* FLECHA */
 .puntero {
   width: 0;
   height: 0;
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
   border-bottom: 25px solid #93BBE1;
 }
 
@@ -102,18 +128,12 @@ body {
     #93BBE1 352deg 360deg
   );
 
-  box-shadow: 0 0 40px rgba(147,187,225,0.6);
-
+  box-shadow: 0 0 50px rgba(147,187,225,0.6);
   transition: transform 4s cubic-bezier(.2,.8,.2,1);
-}
-
-/* BOTON GIRAR */
-.girar-btn {
-  margin-top: 10px;
 }
 
 /* RESULTADO */
 #resultado {
   margin-top: 10px;
-  font-size: 20px;
+  text-align: center;
 }
