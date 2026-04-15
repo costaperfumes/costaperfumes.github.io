@@ -8,35 +8,39 @@
 body {
   overflow: hidden;
   color: white;
+  perspective: 900px;
 }
 
-/* VIDEO */
-.video-bg {
+/* =======================
+   VIDEO
+======================= */
+video {
   position: fixed;
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: blur(6px) brightness(0.55);
   transform: scale(1.1);
+  z-index: -3;
   opacity: 0;
   transition: 1.2s ease;
-  z-index: -2;
 }
 
-.video-bg.visible {
+video.visible {
   opacity: 1;
 }
 
 /* OVERLAY */
 .overlay {
   position: fixed;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0,0,0,0.55);
-  z-index: -1;
+  z-index: -2;
 }
 
-/* HERO */
+/* =======================
+   HERO
+======================= */
 .hero {
   height: 100vh;
   display: flex;
@@ -55,22 +59,27 @@ body {
   transform: translateY(0);
 }
 
-/* BOTONES */
+h1 {
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+/* =======================
+   BOTONES
+======================= */
 .btn {
   padding: 12px 28px;
   background: #93BBE1;
   border: none;
   border-radius: 30px;
-  cursor: pointer;
   font-weight: bold;
+  cursor: pointer;
 }
 
-.secondary {
-  background: #444;
-  margin-top: 10px;
-}
-
-/* MODAL */
+/* =======================
+   MODAL
+======================= */
 .modal {
   position: fixed;
   inset: 0;
@@ -90,23 +99,131 @@ body {
   pointer-events: all;
 }
 
-/* CAJA */
+/* =======================
+   CONTENEDOR
+======================= */
 .box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
   text-align: center;
 }
 
+/* =======================
+   CAJA 3D
+======================= */
 .cube {
-  width: 140px;
-  height: 140px;
-  background: #93BBE1;
-  border-radius: 14px;
-  margin: 0 auto 20px auto;
-  box-shadow: 0 0 35px rgba(147,187,225,0.7);
-  transition: transform 0.6s ease;
+  position: relative;
+  width: 150px;
+  height: 150px;
+
+  transform-style: preserve-3d;
+  transform: rotateX(-25deg) rotateY(35deg);
+  transition: transform 0.8s ease;
+}
+
+/* CARAS */
+.face {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+
+  background: linear-gradient(145deg, #a8c8ea, #7aa9d6);
+  border: 1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,0.1),
+    0 0 25px rgba(147,187,225,0.4);
+}
+
+/* 3D POSITIONS */
+.front  { transform: translateZ(75px); }
+.back   { transform: rotateY(180deg) translateZ(75px); }
+.left   { transform: rotateY(-90deg) translateZ(75px); }
+.right  { transform: rotateY(90deg) translateZ(75px); }
+.top    { transform: rotateX(90deg) translateZ(75px); }
+.bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+/* OPEN ANIMATION */
+.cube.open {
+  transform: rotateX(-25deg) rotateY(400deg) scale(1.05);
+}
+
+/* =======================
+   LUZ PREMIUM
+======================= */
+.light {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(147,187,225,0.35), transparent 60%);
+  transform: translateY(120px);
+  opacity: 0;
+  filter: blur(10px);
+  transition: 0.8s ease;
+  z-index: -1;
+}
+
+.light.active {
+  opacity: 1;
+  transform: translateY(-120px);
 }
 
 /* RESULTADO */
 #result {
-  margin-top: 15px;
+  margin-top: 10px;
 }
- 
+
+/* =======================
+   📱 MOBILE OPTIMIZATION
+======================= */
+@media (max-width: 768px) {
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  /* CAJA MÁS PEQUEÑA */
+  .cube {
+    width: 110px;
+    height: 110px;
+  }
+
+  .face {
+    width: 110px;
+    height: 110px;
+  }
+
+  /* PROFUNDIDAD 3D MOBILE */
+  .front  { transform: translateZ(55px); }
+  .back   { transform: rotateY(180deg) translateZ(55px); }
+  .left   { transform: rotateY(-90deg) translateZ(55px); }
+  .right  { transform: rotateY(90deg) translateZ(55px); }
+  .top    { transform: rotateX(90deg) translateZ(55px); }
+  .bottom { transform: rotateX(-90deg) translateZ(55px); }
+
+  /* LUZ MÁS CONTROLADA */
+  .light {
+    width: 220px;
+    height: 220px;
+  }
+
+  .box {
+    gap: 14px;
+  }
+
+  .hero {
+    padding: 0 20px;
+  }
+
+  .modal {
+    padding: 20px;
+  }
+}
