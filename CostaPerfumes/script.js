@@ -1,3 +1,12 @@
+// FADE IN SINCRONIZADO
+window.addEventListener("load", () => {
+  document.getElementById("videoBg").classList.add("visible");
+
+  setTimeout(() => {
+    document.getElementById("contenido").classList.add("visible");
+  }, 400);
+});
+
 const premios = [
   { nombre: "Sigue participando", prob: 65, angulo: 120 },
   { nombre: "5% OFF", prob: 25, angulo: 280 },
@@ -5,22 +14,22 @@ const premios = [
   { nombre: "$20.000", prob: 2, angulo: 355 }
 ];
 
-// ABRIR RULETA
+let girando = false;
+
+// ABRIR
 function abrirRuleta() {
   document.getElementById("ruletaContainer").classList.add("active");
 }
 
-// CERRAR AL HACER CLICK FUERA
-document.getElementById("ruletaContainer").addEventListener("click", function(e){
-  if(e.target === this){
-    this.classList.remove("active");
-  }
-});
-
 // GIRAR
 function girarRuleta() {
+  if (girando) return;
+  girando = true;
+
   const ruleta = document.getElementById("ruleta");
   const resultado = document.getElementById("resultado");
+
+  resultado.innerHTML = "";
 
   let rand = Math.random() * 100;
   let acumulado = 0;
@@ -43,6 +52,7 @@ function girarRuleta() {
       <h2>${premio.nombre}</h2>
       <button class="btn" onclick="irInstagram()">Reclamar</button>
     `;
+    girando = false;
   }, 4000);
 }
 
