@@ -1,98 +1,76 @@
-// ESPERAR A QUE TODO CARGUE
 document.addEventListener("DOMContentLoaded", () => {
 
-  const video = document.getElementById("videoBg");
-  const contenido = document.getElementById("contenido");
+  const video = document.getElementById("bgVideo");
+  const hero = document.getElementById("hero");
 
-  if (video) {
-    video.classList.add("visible");
-  }
-
+  // fade correcto
   setTimeout(() => {
-    if (contenido) contenido.classList.add("visible");
-  }, 400);
+    video.classList.add("visible");
+    hero.classList.add("visible");
+  }, 300);
+
+  // botones
+  document.getElementById("openBoxBtn").addEventListener("click", openModal);
+  document.getElementById("closeBtn").addEventListener("click", closeModal);
+  document.getElementById("openRewardBtn").addEventListener("click", openReward);
 
 });
 
-// PREMIOS
-const premios = [
-  { nombre: "Sigue participando", prob: 60 },
-  { nombre: "5% OFF", prob: 25 },
-  { nombre: "10% OFF", prob: 10 },
-  { nombre: "$20.000", prob: 5 }
+const modal = document.getElementById("modal");
+const result = document.getElementById("result");
+const cube = document.querySelector(".cube");
+
+let used = false;
+
+// abrir modal
+function openModal() {
+  modal.classList.add("active");
+}
+
+// cerrar modal
+function closeModal() {
+  modal.classList.remove("active");
+  result.innerHTML = "";
+  used = false;
+  cube.style.transform = "scale(1)";
+}
+
+// premios (simple y estable)
+const prizes = [
+  { name: "Sigue participando", chance: 60 },
+  { name: "5% OFF", chance: 25 },
+  { name: "10% OFF", chance: 10 },
+  { name: "$20.000", chance: 5 }
 ];
 
-let abierta = false;
+// abrir premio
+function openReward() {
+  if (used) return;
+  used = true;
 
-// ABRIR CAJA
-function abrirCaja() {
-  const contenedor = document.getElementById("cajaContainer");
+  cube.style.transform = "scale(1.2) rotate(5deg)";
 
-  if (!contenedor) {
-    console.error("No existe cajaContainer");
-    return;
+  let r = Math.random() * 100;
+  let acc = 0;
+  let win = prizes[0];
+
+  for (let p of prizes) {
+    acc += p.chance;
+    if (r <= acc) {
+      win = p;
+      break;
+    }
   }
-
-  contenedor.classList.add("active");
-}
-
-// CERRAR CAJA
-function cerrarCaja() {
-  const contenedor = document.getElementById("cajaContainer");
-  const resultado = document.getElementById("resultado");
-  const caja = document.getElementById("caja");
-
-  if (contenedor) contenedor.classList.remove("active");
-  if (resultado) resultado.innerHTML = "";
-  if (caja) {
-    caja.style.transform = "scale(1)";
-    caja.classList.remove("abriendo");
-  }
-
-  abierta = false;
-}
-
-// ABRIR PREMIO
-function abrirPremio() {
-  if (abierta) return;
-
-  const caja = document.getElementById("caja");
-  const resultado = document.getElementById("resultado");
-
-  if (!caja || !resultado) {
-    console.error("Faltan elementos en el DOM");
-    return;
-  }
-
-  abierta = true;
-
-  caja.classList.add("abriendo");
 
   setTimeout(() => {
-
-    let rand = Math.random() * 100;
-    let acumulado = 0;
-    let premio = premios[0];
-
-    for (let p of premios) {
-      acumulado += p.prob;
-      if (rand <= acumulado) {
-        premio = p;
-        break;
-      }
-    }
-
-    resultado.innerHTML = `
-      <h2>${premio.nombre}</h2>
-      <button class="btn" onclick="irInstagram()">Reclamar</button>
+    result.innerHTML = `
+      <h2>${win.name}</h2>
+      <button class="btn" onclick="goIG()">Reclamar</button>
     `;
-
-    caja.style.transform = "scale(1.2)";
-
-  }, 700);
+  }, 600);
 }
 
-// INSTAGRAM
-function irInstagram() {
+// instagram
+function goIG() {
   window.open("https://www.instagram.com/costaperfumeslaserenacl", "_blank");
 }
