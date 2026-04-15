@@ -24,7 +24,13 @@ body{margin:0;background:black;font-family:Arial, sans-serif;overflow:hidden}
 .ruleta-container{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);display:flex;flex-direction:column;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:.3s}
 .ruleta-container.active{opacity:1;pointer-events:all}
 
-.puntero{width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:25px solid #93BBE1;margin-bottom:10px}
+.puntero{
+      width:0;height:0;
+      border-left:12px solid transparent;
+      border-right:12px solid transparent;
+      border-top:25px solid #93BBE1;
+      margin-bottom:10px;
+    }
 
 .ruleta{
 width:260px;height:260px;border-radius:50%;position:relative;
@@ -36,6 +42,7 @@ background:conic-gradient(
 );
 box-shadow:0 0 40px rgba(147,187,225,.6), inset 0 0 20px rgba(0,0,0,.3);
 transition:transform 3.5s cubic-bezier(.2,.8,.2,1);
+}
 }
 
 .label{
@@ -111,6 +118,9 @@ function girarRuleta(){
 const ruleta=document.getElementById('ruleta');
 const resultado=document.getElementById('resultado');
 
+const audio=new Audio('https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-spin-1930.mp3');
+audio.play();
+
 const premios=[
 {t:'$20.000',p:0.00001},
 {t:'5%',p:0.005},
@@ -122,10 +132,17 @@ let r=Math.random(),a=0,sel=premios[3];
 for(let i of premios){a+=i.p;if(r<=a){sel=i;break}}
 
 const idx=premios.indexOf(sel);
-const grados=360*6+(idx*90);
+const grados=360*6+(idx*90)+45;
 ruleta.style.transform=`rotate(${grados}deg)`;
 
 setTimeout(()=>{
+if(sel.t!=='Sigue participando'){
+confetti();
+}
+resultado.innerHTML=`Ganaste: ${sel.t}<br>
+<button class="claim-btn" onclick="irInstagram()">Reclamar</button>`;
+},3500);
+}(()=>{
 resultado.innerHTML=`Ganaste: ${sel.t}<br>
 <button class="claim-btn" onclick="irInstagram()">Reclamar</button>`;
 },3500);
@@ -148,6 +165,32 @@ video.addEventListener('playing',()=>{
   video.style.opacity=1;
   contenido.style.opacity=1;
 });
+
+// confetti simple
+function confetti(){
+for(let i=0;i<30;i++){
+const el=document.createElement('div');
+el.style.position='fixed';
+el.style.width='6px';
+el.style.height='6px';
+el.style.background='#93BBE1';
+el.style.top='50%';
+el.style.left='50%';
+el.style.zIndex='999';
+el.style.borderRadius='50%';
+document.body.appendChild(el);
+
+const x=(Math.random()-0.5)*300;
+const y=(Math.random()-0.5)*300;
+
+el.animate([
+{transform:'translate(0,0)',opacity:1},
+{transform:`translate(${x}px,${y}px)`,opacity:0}
+],{duration:1000,easing:'ease-out'});
+
+setTimeout(()=>el.remove(),1000);
+}
+}
 
 </script>
 
