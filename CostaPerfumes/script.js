@@ -1,4 +1,4 @@
-// FADE IN SINCRONIZADO
+// FADE
 window.addEventListener("load", () => {
   document.getElementById("videoBg").classList.add("visible");
 
@@ -7,53 +7,53 @@ window.addEventListener("load", () => {
   }, 400);
 });
 
+// PREMIOS
 const premios = [
-  { nombre: "Sigue participando", prob: 65, angulo: 120 },
-  { nombre: "5% OFF", prob: 25, angulo: 280 },
-  { nombre: "10% OFF", prob: 8, angulo: 338 },
-  { nombre: "$20.000", prob: 2, angulo: 355 }
+  { nombre: "Sigue participando", prob: 60 },
+  { nombre: "5% OFF", prob: 25 },
+  { nombre: "10% OFF", prob: 10 },
+  { nombre: "$20.000", prob: 5 }
 ];
 
-let girando = false;
+let abierta = false;
 
-// ABRIR
-function abrirRuleta() {
-  document.getElementById("ruletaContainer").classList.add("active");
+// ABRIR MODAL
+function abrirCaja() {
+  document.getElementById("cajaContainer").classList.add("active");
 }
 
-// GIRAR
-function girarRuleta() {
-  if (girando) return;
-  girando = true;
+// ABRIR PREMIO
+function abrirPremio() {
+  if (abierta) return;
 
-  const ruleta = document.getElementById("ruleta");
+  abierta = true;
+
+  const caja = document.getElementById("caja");
   const resultado = document.getElementById("resultado");
 
-  resultado.innerHTML = "";
-
-  let rand = Math.random() * 100;
-  let acumulado = 0;
-  let premio;
-
-  for (let p of premios) {
-    acumulado += p.prob;
-    if (rand <= acumulado) {
-      premio = p;
-      break;
-    }
-  }
-
-  let giro = 1800 + premio.angulo;
-
-  ruleta.style.transform = `rotate(${giro}deg)`;
+  caja.classList.add("abriendo");
 
   setTimeout(() => {
+
+    let rand = Math.random() * 100;
+    let acumulado = 0;
+    let premio;
+
+    for (let p of premios) {
+      acumulado += p.prob;
+      if (rand <= acumulado) {
+        premio = p;
+        break;
+      }
+    }
+
     resultado.innerHTML = `
       <h2>${premio.nombre}</h2>
       <button class="btn" onclick="irInstagram()">Reclamar</button>
     `;
-    girando = false;
-  }, 4000);
+
+    caja.style.transform = "scale(1.2)";
+  }, 700);
 }
 
 // INSTAGRAM
