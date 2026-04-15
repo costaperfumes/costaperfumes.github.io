@@ -15,6 +15,7 @@
 body {
   overflow: hidden;
   color: white;
+  perspective: 900px;
 }
 
 /* VIDEO */
@@ -67,7 +68,7 @@ h1 {
   letter-spacing: 2px;
 }
 
-/* BOTONES */
+/* BOTÓN */
 .btn {
   padding: 12px 28px;
   background: #93BBE1;
@@ -97,19 +98,48 @@ h1 {
   pointer-events: all;
 }
 
-/* CAJA */
+/* CAJA 3D */
 .box {
   text-align: center;
 }
 
+/* CUBO */
 .cube {
+  position: relative;
   width: 150px;
   height: 150px;
-  background: #93BBE1;
-  border-radius: 16px;
   margin: 0 auto 20px auto;
-  box-shadow: 0 0 40px rgba(147,187,225,0.7);
-  transition: transform 0.6s ease;
+
+  transform-style: preserve-3d;
+  transform: rotateX(-25deg) rotateY(35deg);
+  transition: transform 0.8s ease;
+}
+
+/* CARAS */
+.face {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+
+  background: linear-gradient(145deg, #a8c8ea, #7aa9d6);
+  border: 1px solid rgba(255,255,255,0.15);
+
+  box-shadow:
+    inset 0 0 20px rgba(255,255,255,0.1),
+    0 0 25px rgba(147,187,225,0.4);
+}
+
+/* posiciones 3D */
+.front  { transform: translateZ(75px); }
+.back   { transform: rotateY(180deg) translateZ(75px); }
+.left   { transform: rotateY(-90deg) translateZ(75px); }
+.right  { transform: rotateY(90deg) translateZ(75px); }
+.top    { transform: rotateX(90deg) translateZ(75px); }
+.bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+/* apertura */
+.cube.open {
+  transform: rotateX(-25deg) rotateY(400deg) scale(1.1);
 }
 
 /* RESULTADO */
@@ -138,7 +168,14 @@ h1 {
 <div class="modal" id="modal">
   <div class="box">
 
-    <div class="cube" id="cube"></div>
+    <div class="cube" id="cube">
+      <div class="face front"></div>
+      <div class="face back"></div>
+      <div class="face left"></div>
+      <div class="face right"></div>
+      <div class="face top"></div>
+      <div class="face bottom"></div>
+    </div>
 
     <button class="btn" id="openReward">Abrir</button>
     <button class="btn" id="closeBtn">Cerrar</button>
@@ -165,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hero.classList.add("visible");
   }, 300);
 
-  // OPEN
+  // OPEN MODAL
   document.getElementById("openBtn").addEventListener("click", () => {
     modal.classList.add("active");
   });
@@ -174,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("closeBtn").addEventListener("click", () => {
     modal.classList.remove("active");
     result.innerHTML = "";
-    cube.style.transform = "scale(1)";
+    cube.classList.remove("open");
     used = false;
   });
 
@@ -192,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (used) return;
     used = true;
 
-    cube.style.transform = "scale(1.2) rotate(5deg)";
+    cube.classList.add("open");
 
     let r = Math.random() * 100;
     let acc = 0;
@@ -208,9 +245,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setTimeout(() => {
 
-      const isLose = win.name === "Sigue participando";
+      const isLoss = win.name === "Sigue participando";
 
-      if (isLose) {
+      if (isLoss) {
         result.innerHTML = `
           <h2 style="opacity:0.8">${win.name}</h2>
           <p style="opacity:0.6; font-size:14px;">Intenta nuevamente más tarde</p>
@@ -225,7 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </button>
       `;
 
-    }, 600);
+    }, 700);
 
   });
 
