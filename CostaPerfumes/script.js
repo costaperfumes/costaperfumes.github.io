@@ -63,6 +63,26 @@ function openReward() {
   }
 
   setTimeout(() => {
+
+    const isLoss = win.name === "Sigue participando";
+
+    if (isLoss) {
+      result.innerHTML = `
+        <h2 style="opacity:0.9">${win.name}</h2>
+        <p style="font-size:14px; opacity:0.7;">Intenta nuevamente mañana</p>
+      `;
+      return;
+    }
+
+    result.innerHTML = `
+      <h2>${win.name}</h2>
+      <button class="btn" onclick="goIG()">Reclamar</button>
+    `;
+
+  }, 600);
+}
+
+  setTimeout(() => {
     result.innerHTML = `
       <h2>${win.name}</h2>
       <button class="btn" onclick="goIG()">Reclamar</button>
