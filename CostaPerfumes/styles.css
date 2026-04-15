@@ -127,11 +127,11 @@ body, html {
   position: relative;
 
   background: conic-gradient(
-    #93BBE1 0deg 90deg,
-    #ffffff 90deg 180deg,
-    #93BBE1 180deg 270deg,
-    #ffffff 270deg 360deg
-  );
+  #ffffff 0deg 234deg,        /* 65% sigue participando */
+  #93BBE1 234deg 324deg,     /* 25% */
+  #ffffff 324deg 352deg,     /* 8% */
+  #93BBE1 352deg 360deg      /* 2% */
+);
 
   box-shadow:
     0 0 40px rgba(147,187,225,0.6),
