@@ -26,7 +26,7 @@ video {
   object-fit: cover;
   filter: blur(6px) brightness(0.55);
   transform: scale(1.1);
-  z-index: -2;
+  z-index: -3;
   opacity: 0;
   transition: 1.2s ease;
 }
@@ -38,10 +38,9 @@ video.visible {
 /* OVERLAY */
 .overlay {
   position: fixed;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0,0,0,0.55);
-  z-index: -1;
+  z-index: -2;
 }
 
 /* HERO */
@@ -98,17 +97,21 @@ h1 {
   pointer-events: all;
 }
 
-/* CAJA 3D */
+/* CONTENEDOR */
 .box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
   text-align: center;
 }
 
-/* CUBO */
+/* 🔷 CAJA 3D */
 .cube {
   position: relative;
   width: 150px;
   height: 150px;
-  margin: 0 auto 20px auto;
 
   transform-style: preserve-3d;
   transform: rotateX(-25deg) rotateY(35deg);
@@ -129,7 +132,7 @@ h1 {
     0 0 25px rgba(147,187,225,0.4);
 }
 
-/* posiciones 3D */
+/* 3D */
 .front  { transform: translateZ(75px); }
 .back   { transform: rotateY(180deg) translateZ(75px); }
 .left   { transform: rotateY(-90deg) translateZ(75px); }
@@ -137,37 +140,57 @@ h1 {
 .top    { transform: rotateX(90deg) translateZ(75px); }
 .bottom { transform: rotateX(-90deg) translateZ(75px); }
 
-/* apertura */
+/* 🔥 APERTURA */
 .cube.open {
-  transform: rotateX(-25deg) rotateY(400deg) scale(1.1);
+  transform: rotateX(-25deg) rotateY(400deg) scale(1.05);
+}
+
+/* 💡 LUZ BASE (apagada) */
+.light {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(147,187,225,0.35), transparent 60%);
+  transform: translateY(120px);
+  opacity: 0;
+  filter: blur(10px);
+  transition: 0.8s ease;
+  z-index: -1;
+}
+
+/* 💡 LUZ ACTIVA (sube) */
+.light.active {
+  opacity: 1;
+  transform: translateY(-120px);
 }
 
 /* RESULTADO */
 #result {
-  margin-top: 15px;
+  margin-top: 10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- VIDEO -->
 <video autoplay muted loop playsinline id="bgVideo">
   <source src="assets/video/playa.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- HERO -->
 <div class="hero" id="hero">
   <h1>Costa Perfumes</h1>
   <button class="btn" id="openBtn">Caja misteriosa</button>
 </div>
 
-<!-- MODAL -->
 <div class="modal" id="modal">
   <div class="box">
 
+    <!-- 💡 LUZ -->
+    <div class="light" id="light"></div>
+
+    <!-- CAJA -->
     <div class="cube" id="cube">
       <div class="face front"></div>
       <div class="face back"></div>
@@ -192,30 +215,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const hero = document.getElementById("hero");
   const modal = document.getElementById("modal");
   const cube = document.getElementById("cube");
+  const light = document.getElementById("light");
   const result = document.getElementById("result");
 
   let used = false;
 
-  // FADE IN
   setTimeout(() => {
     video.classList.add("visible");
     hero.classList.add("visible");
   }, 300);
 
-  // OPEN MODAL
   document.getElementById("openBtn").addEventListener("click", () => {
     modal.classList.add("active");
   });
 
-  // CLOSE
   document.getElementById("closeBtn").addEventListener("click", () => {
     modal.classList.remove("active");
     result.innerHTML = "";
     cube.classList.remove("open");
+    light.classList.remove("active");
     used = false;
   });
 
-  // PRIZES
   const prizes = [
     { name: "Sigue participando", chance: 60 },
     { name: "5% OFF", chance: 25 },
@@ -223,13 +244,13 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "$20.000", chance: 5 }
   ];
 
-  // OPEN REWARD
   document.getElementById("openReward").addEventListener("click", () => {
 
     if (used) return;
     used = true;
 
     cube.classList.add("open");
+    light.classList.add("active");
 
     let r = Math.random() * 100;
     let acc = 0;
