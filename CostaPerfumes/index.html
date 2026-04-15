@@ -23,9 +23,10 @@
     }
 
     .subtitulo {
-      margin-top: 10px;
-      color: rgba(255,255,255,0.8);
-      font-size: 1rem;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.95rem;
       text-align:center;
     }
 
@@ -83,6 +84,35 @@
       margin-bottom: 10px;
     }
 
+    .ruleta-wrapper {
+      position: relative;
+      width: 220px;
+      height: 220px;
+    }
+
+    .labels {
+      position:absolute;
+      width:100%;
+      height:100%;
+      top:0;
+      left:0;
+      display:flex;
+      flex-wrap:wrap;
+      pointer-events:none;
+      font-size:10px;
+      color:black;
+      font-weight:bold;
+      text-align:center;
+    }
+
+    .labels span {
+      width:50%;
+      height:50%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
     .ruleta {
       width: 220px;
       height: 220px;
@@ -126,7 +156,7 @@
 
   <div class="contenido">
     <h1 class="titulo">Costa Perfumes</h1>
-    <p class="subtitulo">Perfumes originales · Envíos a todo Chile</p>
+    <p class="subtitulo">Perfumes originales · La Serena</p>
 
     <div class="categorias">
       <div class="categoria" onclick="abrirRuleta()">
@@ -142,7 +172,15 @@
   <!-- RULETA -->
   <div class="ruleta-container" id="ruletaContainer">
     <div class="puntero"></div>
-    <div class="ruleta" id="ruleta"></div>
+    <div class="ruleta-wrapper">
+      <div class="ruleta" id="ruleta"></div>
+      <div class="labels">
+        <span>$20.000</span>
+        <span>5%</span>
+        <span>10%</span>
+        <span>Sigue participando</span>
+      </div>
+    </div>
     <div class="resultado" id="resultado"></div>
   </div>
 
