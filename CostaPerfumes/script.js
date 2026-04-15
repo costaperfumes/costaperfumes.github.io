@@ -1,11 +1,20 @@
-window.addEventListener("load", () => {
-  document.getElementById("videoBg").classList.add("visible");
+// ESPERAR A QUE TODO CARGUE
+document.addEventListener("DOMContentLoaded", () => {
+
+  const video = document.getElementById("videoBg");
+  const contenido = document.getElementById("contenido");
+
+  if (video) {
+    video.classList.add("visible");
+  }
 
   setTimeout(() => {
-    document.getElementById("contenido").classList.add("visible");
+    if (contenido) contenido.classList.add("visible");
   }, 400);
+
 });
 
+// PREMIOS
 const premios = [
   { nombre: "Sigue participando", prob: 60 },
   { nombre: "5% OFF", prob: 25 },
@@ -15,29 +24,47 @@ const premios = [
 
 let abierta = false;
 
-// ABRIR
+// ABRIR CAJA
 function abrirCaja() {
-  document.getElementById("cajaContainer").classList.add("active");
+  const contenedor = document.getElementById("cajaContainer");
+
+  if (!contenedor) {
+    console.error("No existe cajaContainer");
+    return;
+  }
+
+  contenedor.classList.add("active");
 }
 
-// CERRAR
+// CERRAR CAJA
 function cerrarCaja() {
-  document.getElementById("cajaContainer").classList.remove("active");
+  const contenedor = document.getElementById("cajaContainer");
+  const resultado = document.getElementById("resultado");
+  const caja = document.getElementById("caja");
 
-  // reset
+  if (contenedor) contenedor.classList.remove("active");
+  if (resultado) resultado.innerHTML = "";
+  if (caja) {
+    caja.style.transform = "scale(1)";
+    caja.classList.remove("abriendo");
+  }
+
   abierta = false;
-  document.getElementById("resultado").innerHTML = "";
-  document.getElementById("caja").style.transform = "scale(1)";
 }
 
 // ABRIR PREMIO
 function abrirPremio() {
   if (abierta) return;
 
-  abierta = true;
-
   const caja = document.getElementById("caja");
   const resultado = document.getElementById("resultado");
+
+  if (!caja || !resultado) {
+    console.error("Faltan elementos en el DOM");
+    return;
+  }
+
+  abierta = true;
 
   caja.classList.add("abriendo");
 
@@ -45,7 +72,7 @@ function abrirPremio() {
 
     let rand = Math.random() * 100;
     let acumulado = 0;
-    let premio;
+    let premio = premios[0];
 
     for (let p of premios) {
       acumulado += p.prob;
