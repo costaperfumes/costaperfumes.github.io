@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Costa Perfumes</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .titulo {
+      position: absolute;
+      top: 18%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,0.9);
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+      font-weight: 600;
+      text-transform: uppercase;
+      backdrop-filter: blur(4px);
+      padding: 10px 20px;
+      border-radius: 12px;
+    }
+
+    .titulo::after {
+      content: "";
+      display: block;
+      width: 40px;
+      height: 2px;
+      background: #FAFA00;
+      margin: 8px auto 0;
+    }
+  
+    /* RESPONSIVE */
+
+    @media (max-width: 768px) {
+      .titulo {
+        font-size: 1.8rem;
+        top: 15%;
+      }
+
+      .categorias {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .categoria {
+        padding: 15px 20px;
+        font-size: 14px;
+      }
+
+      .modal-content {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card {
+        width: 140px;
+        height: 250px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .titulo {
+        font-size: 3rem;
+      }
+
+      .card {
+        width: 220px;
+        height: 390px;
+      }
+    }
+
+  </style>
+</head>
+
+<body style="background:black;">
+
+  <!-- VIDEO -->
+  <video autoplay muted loop playsinline preload="auto" poster="" class="video-bg">
+    <source src="assets/video/playa.mp4" type="video/mp4">
+  </video>
+
+  <div class="overlay"></div>
+
+  <div class="contenido">
+
+    <h1 class="titulo">Costa Perfumes</h1>
+
+    <div class="categorias">
+        <div class="categoria" onclick="abrirModal('nicho')">Nicho</div>
+        <div class="categoria" onclick="abrirModal('disenador')">Diseñador</div>
+        <div class="categoria" onclick="abrirModal('arabe')">Árabe</div>
+    </div>
+
+    <a href="https://instagram.com/costaperfumeslaserenacl" target="_blank" class="btn">
+      Contáctanos
+    </a>
+
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="close" onclick="cerrarModal()">✕</div>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+
+  <script>
+      <script>
+    const video = document.querySelector('.video-bg');
+
+    video.muted = true;
+    video.play().catch(() => {});
+
+    // ocultar completamente al inicio
+    video.style.opacity = 0;
+    video.style.visibility = 'hidden';
+
+    // mostrar SOLO cuando realmente esté reproduciendo
+    video.addEventListener('playing', () => {
+      video.style.visibility = 'visible';
+      video.style.transition = 'opacity 1.5s ease';
+      video.style.opacity = 1;
+    });
+  </script>
+
+</body>
+</html>
