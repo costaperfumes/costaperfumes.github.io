@@ -16,24 +16,17 @@
 
 <!-- CONTENIDO -->
 <div class="contenido" id="contenido">
-  <h1 class="titulo">Costa Perfumes</h1>
-
-  <button class="btn" onclick="abrirRuleta()">
-    Participa y gana
-  </button>
+  <h1>Costa Perfumes</h1>
+  <button class="btn" onclick="abrirCaja()">Abrir caja misteriosa</button>
 </div>
 
-<!-- RULETA -->
-<div class="ruleta-container" id="ruletaContainer">
-  <div class="ruleta-box">
+<!-- MODAL CAJA -->
+<div class="caja-container" id="cajaContainer">
+  <div class="caja-box">
 
-    <div class="puntero"></div>
+    <div class="caja" id="caja"></div>
 
-    <div class="ruleta" id="ruleta"></div>
-
-    <button class="btn girar-btn" onclick="girarRuleta()">
-      Girar
-    </button>
+    <button class="btn" onclick="abrirPremio()">Abrir</button>
 
     <div id="resultado"></div>
 
