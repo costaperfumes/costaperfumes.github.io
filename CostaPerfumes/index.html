@@ -8,38 +8,38 @@
 <body>
 
 <!-- VIDEO -->
-<video autoplay muted loop playsinline class="video-bg">
+<video autoplay muted loop playsinline class="video-bg" id="videoBg">
   <source src="assets/video/playa.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
 <!-- CONTENIDO -->
-<div class="contenido">
-  <h1>Costa Perfumes</h1>
+<div class="contenido" id="contenido">
+  <h1 class="titulo">Costa Perfumes</h1>
 
   <button class="btn" onclick="abrirRuleta()">
     Participa y gana
   </button>
-
-  <div id="resultado"></div>
 </div>
 
 <!-- RULETA -->
 <div class="ruleta-container" id="ruletaContainer">
-
   <div class="ruleta-box">
+
     <div class="puntero"></div>
+
     <div class="ruleta" id="ruleta"></div>
 
     <button class="btn girar-btn" onclick="girarRuleta()">
       Girar
     </button>
-  </div>
 
+    <div id="resultado"></div>
+
+  </div>
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
