@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Costa Perfumes</title>
 
-  <!-- CSS -->
   <link rel="stylesheet" href="styles.css">
+
   <style>
+    body { background:black; }
+
     .titulo {
       position: absolute;
       top: 18%;
@@ -18,136 +20,184 @@
       letter-spacing: 2px;
       font-weight: 600;
       text-transform: uppercase;
-      backdrop-filter: blur(4px);
-      padding: 10px 20px;
-      border-radius: 12px;
     }
 
-    .titulo::after {
-      content: "";
-      display: block;
-      width: 40px;
-      height: 2px;
-      background: #FAFA00;
-      margin: 8px auto 0;
-    }
-  
-    /* RESPONSIVE */
-
-    @media (max-width: 768px) {
-      .titulo {
-        font-size: 1.8rem;
-        top: 15%;
-      }
-
-      .categorias {
-        flex-direction: column;
-        gap: 15px;
-      }
-
-      .categoria {
-        padding: 15px 20px;
-        font-size: 14px;
-      }
-
-      .modal-content {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .card {
-        width: 140px;
-        height: 250px;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .titulo {
-        font-size: 3rem;
-      }
-
-      .card {
-        width: 220px;
-        height: 390px;
-      }
-    }
-
-  
     .subtitulo {
       margin-top: 10px;
       color: rgba(255,255,255,0.8);
       font-size: 1rem;
-      letter-spacing: 1px;
+      text-align:center;
+    }
+
+    .categorias {
+      margin-top: 40px;
+    }
+
+    .categoria {
+      padding: 20px 30px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 15px;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      color:white;
     }
 
     .btn-main {
       margin-top: 25px;
       padding: 14px 28px;
-      font-size: 16px;
       border-radius: 40px;
       background: #FAFA00;
-      box-shadow: 0 0 20px rgba(250,250,0,0.4);
+      text-decoration:none;
+      color:black;
+      font-weight:bold;
     }
 
-    .btn-main:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 30px rgba(250,250,0,0.7);
+    /* RULETA */
+
+    .ruleta-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+      z-index: 50;
+    }
+
+    .ruleta-container.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .puntero {
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 20px solid #FAFA00;
+      margin-bottom: 10px;
+    }
+
+    .ruleta {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: conic-gradient(
+        #FAFA00 0deg 72deg,
+        #fff 72deg 144deg,
+        #FAFA00 144deg 216deg,
+        #fff 216deg 288deg,
+        #FAFA00 288deg 360deg
+      );
+      transition: transform 3s ease-out;
+    }
+
+    .resultado {
+      color:white;
+      margin-top:20px;
+      text-align:center;
+    }
+
+    .claim-btn {
+      margin-top:15px;
+      padding:10px 20px;
+      border-radius:25px;
+      background:#FAFA00;
+      border:none;
+      font-weight:bold;
+      cursor:pointer;
     }
 
   </style>
 </head>
 
-<body style="background:black;">
+<body>
 
-  <!-- VIDEO -->
-  <video autoplay muted loop playsinline preload="auto" poster="" class="video-bg">
+  <video autoplay muted loop playsinline preload="auto" class="video-bg">
     <source src="assets/video/playa.mp4" type="video/mp4">
   </video>
 
   <div class="overlay"></div>
 
   <div class="contenido">
-
     <h1 class="titulo">Costa Perfumes</h1>
     <p class="subtitulo">Perfumes originales · Envíos a todo Chile</p>
 
     <div class="categorias">
-        <div class="categoria" onclick="abrirModal('nicho')">Nicho</div>
-        <div class="categoria" onclick="abrirModal('disenador')">Diseñador</div>
-        <div class="categoria" onclick="abrirModal('arabe')">Árabe</div>
+      <div class="categoria" onclick="abrirRuleta()">
+        🎯 Participa y gana
+      </div>
     </div>
 
-    <a href="https://instagram.com/costaperfumlaserenacl" target="_blank" class="btn btn-main">
+    <a href="https://instagram.com/costaperfumlaserenacl" target="_blank" class="btn-main">
       Comprar por Instagram
     </a>
-
   </div>
 
-  <div class="modal" id="modal">
-    <div class="close" onclick="cerrarModal()">✕</div>
-    <div class="modal-content" id="modalContent"></div>
+  <!-- RULETA -->
+  <div class="ruleta-container" id="ruletaContainer">
+    <div class="puntero"></div>
+    <div class="ruleta" id="ruleta"></div>
+    <div class="resultado" id="resultado"></div>
   </div>
-
-  <!-- JS -->
-  <script src="script.js"></script>
 
   <script>
-      <script>
     const video = document.querySelector('.video-bg');
-
-    video.muted = true;
-    video.play().catch(() => {});
-
-    // ocultar completamente al inicio
     video.style.opacity = 0;
     video.style.visibility = 'hidden';
 
-    // mostrar SOLO cuando realmente esté reproduciendo
     video.addEventListener('playing', () => {
       video.style.visibility = 'visible';
       video.style.transition = 'opacity 1.5s ease';
       video.style.opacity = 1;
     });
+
+    function abrirRuleta() {
+      const container = document.getElementById('ruletaContainer');
+      const resultado = document.getElementById('resultado');
+
+      resultado.innerHTML = `
+        <p>Síguenos en Instagram para participar</p>
+        <button class="claim-btn" onclick="irInstagram()">Seguir ahora</button>
+        <br><br>
+        <button class="claim-btn" onclick="girarRuleta()">Ya seguí, girar ruleta</button>
+      `;
+
+      container.classList.add('active');
+    }
+
+    function girarRuleta() {
+      const ruleta = document.getElementById('ruleta');
+      const resultado = document.getElementById('resultado');
+
+      const premios = ['5% OFF','10% OFF','15% OFF','ENVÍO GRATIS','REGALO'];
+      const random = Math.floor(Math.random() * premios.length);
+      const grados = 360 * 5 + (random * 72);
+
+      ruleta.style.transform = `rotate(${grados}deg)`;
+
+      setTimeout(() => {
+        resultado.innerHTML = `
+          Ganaste: ${premios[random]} 🎉<br>
+          <button class="claim-btn" onclick="irInstagram()">Reclamar premio</button>
+        `;
+      }, 3000);
+    }
+
+    function irInstagram() {
+      window.open('https://instagram.com/costaperfumlaserenacl', '_blank');
+    }
+
+    document.getElementById('ruletaContainer').onclick = function(e) {
+      if (e.target.id === 'ruletaContainer') {
+        this.classList.remove('active');
+      }
+    }
   </script>
 
 </body>
