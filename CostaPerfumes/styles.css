@@ -1,42 +1,26 @@
-* {
+body {
   margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+  font-family: Arial;
+  overflow: hidden;
+  color: white;
 }
 
-body, html {
-  height: 100%;
-}
-
-/* VIDEO PREMIUM */
+/* VIDEO */
 .video-bg {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-
-  /* efecto lujo */
   filter: blur(5px) brightness(0.6);
   transform: scale(1.1);
-
   z-index: -2;
 }
 
-/* OVERLAY ELEGANTE */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    rgba(0,0,0,0.4),
-    rgba(0,0,0,0.7)
-  );
-  backdrop-filter: blur(2px);
+  background: rgba(0,0,0,0.6);
   z-index: -1;
 }
 
@@ -47,84 +31,41 @@ body, html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white;
-
-  text-align: center;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
 }
 
-/* CATEGORÍA (botón principal ahora) */
-.categoria {
-  margin-top: 30px;
-  padding: 18px 30px;
-  background: rgba(255,255,255,0.15);
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.categoria:hover {
-  transform: scale(1.1);
-}
-
-/* BOTÓN MARCA */
+/* BOTON */
 .btn {
-  margin-top: 20px;
   padding: 12px 25px;
   background: #93BBE1;
-  color: black;
+  border: none;
   border-radius: 30px;
-  text-decoration: none;
   font-weight: bold;
-  transition: 0.3s;
-  box-shadow: 0 0 15px rgba(147,187,225,0.4);
-}
-
-.btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(147,187,225,0.7);
+  cursor: pointer;
 }
 
 /* RULETA */
 .ruleta-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.95);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 50;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.ruleta-container.active {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* FLECHA */
 .puntero {
   width: 0;
   height: 0;
-  border-left: 12px solid transparent;
-  border-right: 12px solid transparent;
-  border-top: 25px solid #93BBE1;
-  margin-bottom: 10px;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 25px solid #93BBE1;
+  margin: auto;
 }
 
-/* CÍRCULO RULETA */
 .ruleta {
-  width: 260px;
-  height: 260px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
-  position: relative;
+  margin-top: 10px;
+  transition: transform 4s cubic-bezier(.2,.8,.2,1);
 
   background: conic-gradient(
     #ffffff 0deg 234deg,
@@ -133,83 +74,5 @@ body, html {
     #93BBE1 352deg 360deg
   );
 
-  box-shadow:
-    0 0 40px rgba(147,187,225,0.6),
-    inset 0 0 25px rgba(0,0,0,0.4);
-
-  border: 6px solid rgba(255,255,255,0.15);
-
-  transition: transform 3.5s cubic-bezier(.2,.8,.2,1);
-}
-
-.ruleta::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-
-  background: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255,255,255,0.25),
-    transparent 70%
-  );
-
-  animation: brillo 4s linear infinite;
-}
-
-@keyframes brillo {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-/* TEXTOS RULETA */
-.label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-origin: 0 0;
-  font-weight: bold;
-  font-size: 13px;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.9);
-}
-
-.label span {
-  display: block;
-  width: 100px;
-  text-align: center;
-  transform: translate(-50%, -50%) rotate(0deg);
-  font-weight: 900;
-  letter-spacing: 0.5px;
-}
-
-/* CENTROS DE CADA SEGMENTO */
-
-/* Sigue participando (centro aprox 117°) */
-.l4 { transform: rotate(117deg) translateY(-95px); }
-
-/* 5% (centro aprox 279°) */
-.l2 { transform: rotate(279deg) translateY(-95px); }
-
-/* 10% (centro aprox 338°) */
-.l3 { transform: rotate(338deg) translateY(-95px); }
-
-/* $20.000 (centro aprox 356°) */
-.l1 { transform: rotate(356deg) translateY(-95px); }
-
-/* RESULTADO */
-.resultado {
-  color: white;
-  margin-top: 20px;
-  text-align: center;
-}
-
-.claim-btn {
-  margin-top: 10px;
-  padding: 10px 20px;
-  border-radius: 25px;
-  background: #93BBE1;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
+  box-shadow: 0 0 40px rgba(147,187,225,0.6);
 }
