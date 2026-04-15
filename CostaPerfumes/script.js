@@ -34,7 +34,18 @@ function girarRuleta() {
   
   let giro = 1800 + posiciones[premioFinal];
 
+  ruleta.style.transition = "transform 3.2s cubic-bezier(.2,.8,.2,1)";
+ruleta.style.transform = `rotate(${giro}deg)`;
+
+// micro rebote
+setTimeout(() => {
+  ruleta.style.transition = "transform 0.3s ease";
+  ruleta.style.transform = `rotate(${giro - 8}deg)`;
+}, 3200);
+
+setTimeout(() => {
   ruleta.style.transform = `rotate(${giro}deg)`;
+}, 3500);
 
   setTimeout(() => {
     resultado.innerHTML = `
