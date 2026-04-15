@@ -48,13 +48,19 @@ text-shadow:0 2px 6px rgba(0,0,0,.8);
 }
 
 .label span{
-display:block;transform:translate(-50%,-100%) rotate(90deg);
-}
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      width:80px;
+      transform:translate(-50%,-100%) rotate(90deg);
+      line-height:1.1;
+    }
 
-.l1{transform:rotate(45deg) translateY(-110px)}
-.l2{transform:rotate(135deg) translateY(-110px)}
-.l3{transform:rotate(225deg) translateY(-110px)}
-.l4{transform:rotate(315deg) translateY(-110px)}
+.l1{transform:rotate(45deg) translateY(-95px)}
+.l2{transform:rotate(135deg) translateY(-95px)}
+.l3{transform:rotate(225deg) translateY(-95px)}
+.l4{transform:rotate(315deg) translateY(-95px)}
 
 .resultado{color:white;margin-top:20px;text-align:center}
 .claim-btn{margin-top:10px;padding:10px 20px;border-radius:25px;background:#93BBE1;border:none;font-weight:bold;cursor:pointer}
@@ -64,13 +70,13 @@ display:block;transform:translate(-50%,-100%) rotate(90deg);
 
 <body>
 
-<video autoplay muted loop playsinline class="video-bg">
+<video autoplay muted loop playsinline class="video-bg" id="bgVideo">
 <source src="assets/video/playa.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<div class="contenido">
+<div class="contenido" id="contenido" style="opacity:0; transition: opacity 1.5s ease;">
 <h1 class="titulo">Costa Perfumes</h1>
 <p class="subtitulo">Perfumes originales · La Serena</p>
 
@@ -85,7 +91,7 @@ display:block;transform:translate(-50%,-100%) rotate(90deg);
 <div class="label l1"><span>$20.000</span></div>
 <div class="label l2"><span>5%</span></div>
 <div class="label l3"><span>10%</span></div>
-<div class="label l4"><span>Sigue participando</span></div>
+<div class="label l4"><span>Sigue<br>participando</span></div>
 </div>
 <div class="resultado" id="resultado"></div>
 </div>
@@ -131,6 +137,18 @@ window.open('https://instagram.com/costaperfumeslaserenacl','_blank')
 
 document.getElementById('ruletaContainer').onclick=function(e){
 if(e.target.id==='ruletaContainer'){this.classList.remove('active')}}
+// sincronizar fade con video
+const video=document.getElementById('bgVideo');
+const contenido=document.getElementById('contenido');
+
+video.style.opacity=0;
+video.style.transition='opacity 1.5s ease';
+
+video.addEventListener('playing',()=>{
+  video.style.opacity=1;
+  contenido.style.opacity=1;
+});
+
 </script>
 
 </body>
