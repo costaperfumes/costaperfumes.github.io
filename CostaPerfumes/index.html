@@ -7,41 +7,23 @@
 </head>
 <body>
 
-<!-- VIDEO -->
 <video autoplay muted loop playsinline class="video-bg">
   <source src="assets/video/playa.mp4" type="video/mp4">
 </video>
 
 <div class="overlay"></div>
 
-<!-- CONTENIDO -->
 <div class="contenido">
   <h1>Costa Perfumes</h1>
-
-  <div class="categoria" onclick="abrirRuleta()">
-    Participa y gana
-  </div>
+  <button class="btn" onclick="girarRuleta()">Girar ruleta</button>
+  <div id="resultado"></div>
 </div>
 
-<!-- RULETA -->
-<div id="ruletaContainer" class="ruleta-container">
-
+<div class="ruleta-container">
   <div class="puntero"></div>
-
-  <div id="ruleta" class="ruleta">
-<div class="label l1"><span>$20.000</span></div>
-<div class="label l2"><span>5% OFF</span></div>
-<div class="label l3"><span>10% OFF</span></div>
-<div class="label l4"><span>sigue<br>participando</span></div>
-  </div>
-
-  <button class="btn" onclick="girarRuleta()">Girar</button>
-
-  <div id="resultado" class="resultado"></div>
-
+  <div class="ruleta" id="ruleta"></div>
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
