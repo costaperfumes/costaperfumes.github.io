@@ -1,4 +1,3 @@
-// FADE
 window.addEventListener("load", () => {
   document.getElementById("videoBg").classList.add("visible");
 
@@ -7,7 +6,6 @@ window.addEventListener("load", () => {
   }, 400);
 });
 
-// PREMIOS
 const premios = [
   { nombre: "Sigue participando", prob: 60 },
   { nombre: "5% OFF", prob: 25 },
@@ -17,9 +15,19 @@ const premios = [
 
 let abierta = false;
 
-// ABRIR MODAL
+// ABRIR
 function abrirCaja() {
   document.getElementById("cajaContainer").classList.add("active");
+}
+
+// CERRAR
+function cerrarCaja() {
+  document.getElementById("cajaContainer").classList.remove("active");
+
+  // reset
+  abierta = false;
+  document.getElementById("resultado").innerHTML = "";
+  document.getElementById("caja").style.transform = "scale(1)";
 }
 
 // ABRIR PREMIO
@@ -53,6 +61,7 @@ function abrirPremio() {
     `;
 
     caja.style.transform = "scale(1.2)";
+
   }, 700);
 }
 
